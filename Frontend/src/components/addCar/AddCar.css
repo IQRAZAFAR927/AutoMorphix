@@ -1,0 +1,66 @@
+  .container {
+    text-align: center;
+    background-color: #b49e8b;
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    top: 30%;
+    border-radius: 10px;
+    border: 2px solid #ad632c;
+    padding: 20px;
+  }
+  
+  .carDetailsDiv {
+    grid-template-columns: 1fr 1fr;
+    background-color: #ad632c;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  
+  .carDetailsDiv > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    color: black;
+    margin-bottom: 10px;
+    margin-left: 75px;
+    margin-right: 75px;
+  }
+  
+  .select-input {
+    padding: 10px;
+    border: 1px solid #ad632c;
+    border-radius: 10px;
+  }
+  
+  .input-text {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ad632c;
+    border-radius: 10px;
+  }
+  
+  .uploadImgBtn button{
+    background-color: #ad632c;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font: bolder;
+    margin-left: 215px;
+  }
+
+  .mb-4 > select {
+    width: calc(50% - 30px);
+    height: 40px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+
+  .mb-4 > input {
+    width: calc(50% - 30px);
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+  }
