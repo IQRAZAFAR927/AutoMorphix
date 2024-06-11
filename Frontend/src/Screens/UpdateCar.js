@@ -10,7 +10,7 @@ const UpdateCar = () => {
     brand: '',
     model: '',
     year: '',
-    Register_num: '',
+    regNumber: '',
     ImagePath: ''
   });
 
@@ -33,7 +33,7 @@ const UpdateCar = () => {
           brand: data.brand,
           model: data.model,
           year: data.year,
-          Register_num: data.Register_num,
+          regNumber: data.Register_num,
           ImagePath: data.ImagePath
         });
         console.log(data);
@@ -43,20 +43,46 @@ const UpdateCar = () => {
       }
     };
 
-   // fetchCarData();
-   
+    fetchCarData();
   }, [Register_num]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevFormData => ({
       ...prevFormData,
-      [name]: value
+      [name]: value.trim() // Remove leading and trailing whitespace
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check for empty fields
+    if (!formData.brand || !formData.model || !formData.year || !formData.regNumber || !formData.ImagePath) {
+      alert('All fields are required!');
+      return;
+    }
+
+    // Validate brand and model contain only alphabets
+    const alphaRegex = /^[A-Za-z]+$/;
+    if (!alphaRegex.test(formData.brand) || !alphaRegex.test(formData.model)) {
+      alert('Brand and Model should contain alphabets only!');
+      return;
+    }
+
+    // Validate year is not more than 4 digits
+    if (formData.year.length > 4) {
+      alert('Year cannot be more than 4 digits!');
+      return;
+    }
+
+    // Validate registration number
+    const regNumberRegex = /^[A-Za-z]{1,3}[0-9]{1,4}$/;
+    if (!regNumberRegex.test(formData.regNumber)) {
+      alert('Registration Number should contain up to 3 alphabets followed by up to 4 digits with no special characters or spaces!');
+      return;
+    }
+
     try {
       const response = await fetch(`http://localhost:3000/car/updatecar/${Register_num}`, {
         method: 'PUT',

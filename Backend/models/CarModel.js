@@ -15,7 +15,7 @@ const CarSchema = mongoose.Schema({
     },
     Register_num:{
         required: true,
-        type: Number
+        type: String
     },
     ImagePath: {  // Add this line
         required: true,

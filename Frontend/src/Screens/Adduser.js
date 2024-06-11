@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Adduser() {
   let navigate = useNavigate();
-
-  const goToUseraddconfirm = () => {
-    navigate('/userconfirm');
-  };
 
   const [formData, setFormData] = useState({
     firstname: '',
@@ -22,14 +17,52 @@ function Adduser() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // Remove whitespaces from value
+    const trimmedValue = value.trim();
+    // Update the form data
     setFormData(prevFormData => ({
       ...prevFormData,
-      [name]: value,
+      [name]: trimmedValue,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check for empty fields and display alerts if any
+    for (const key in formData) {
+      if (!formData[key]) {
+        alert(`${key.charAt(0).toUpperCase() + key.slice(1)} field cannot be empty.`);
+        return;
+      }
+    }
+
+    // Check for alphabets in firstname and lastname
+    if (!/^[A-Za-z]+$/.test(formData.firstname) || !/^[A-Za-z]+$/.test(formData.lastname)) {
+      alert('Firstname and Lastname must contain only alphabets.');
+      return;
+    }
+
+    // Check for valid email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    // Check for spaces in username and password
+    if (/\s/.test(formData.username) || /\s/.test(formData.password)) {
+      alert('Username and Password cannot contain spaces.');
+      return;
+    }
+
+    // Password validation rules
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      alert('Password must be at least 8 characters long with at least one uppercase letter, one digit, and one special character.');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3000/user/adduser', {
         method: 'POST',
@@ -49,7 +82,7 @@ function Adduser() {
           password: ''
         });
       } else {
-        alert(`Add user failed: ${data.message}`);
+        alert('Add user failed: ${data.message}');
         console.log('Add User failed:', data.message);
       }
     } catch (error) {

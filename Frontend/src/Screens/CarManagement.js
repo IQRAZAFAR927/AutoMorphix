@@ -47,21 +47,23 @@ function CarManagement() {
   };
 
   return (
-    <div>
-      <Header />
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <Header style={{ position: 'sticky', top: '0', zIndex: 9999 }} />
       <div className="container d-flex flex-column justify-content-center align-items-center h-100 bg-opacity-25" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
         <div
           className="card border-0"
           style={{
             marginTop: '50px',
-            marginLeft:'200px',
+            marginLeft: '200px',
             minWidth: '800px',
-            minHeight: '60vh',
+            minHeight: '70vh',
+            marginBottom: '200px',
             backgroundColor: 'rgba(194, 167, 148, 0.95)',
             borderRadius: '15px',
             padding: '20px',
             boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset',
-            position: 'relative', zIndex: 2
+            maxHeight: '60vh', // Set maximum height for the container
+            overflowY: 'auto' // Enable vertical scrolling
           }}
         >
           <button className="btn btn-success mb-3" onClick={handleAddNewCar} style={{ position: 'absolute', right: 20, top: 30 ,padding:'0.25rem 0.5rem',color:'inherit',fontSize:'1rem'}}>

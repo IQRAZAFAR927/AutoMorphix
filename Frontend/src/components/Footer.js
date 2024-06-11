@@ -1,8 +1,9 @@
 import React from 'react';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function Footer() {
   return (
-    <footer className="text-white text-center py-4 bg-opacity-50" style={{backgroundColor:'#ac632c', boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset'}}>
+    <footer className="text-white text-center py-4 bg-opacity-50" style={{ backgroundColor: '#ac632c', boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset' }}>
       <div className="container">
         <div className="row">
           <div className="col-md-4 mb-3">

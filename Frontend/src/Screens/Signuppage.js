@@ -10,75 +10,87 @@ import Footer from '../components/Footer';
 
 function SignUpPage() 
 {
- // const navigate = useNavigate();
- let navigate= useNavigate();
+ let navigate = useNavigate();
 
-  // const goToAdminDashboard=()=>{
-  //   navigate('/admin');
-  // }
-  // const gotoLoginPage=()=>{
-  //   navigate('/')
-  // }
+ const [formData, setFormData] = useState({
+   firstname: '',
+   lastname: '',
+   email: '',
+   username: '',
+   password: ''
+ });
 
-  const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    email: '',
-    username: '',
-    password: ''
-  });
+ const handleChange = (e) => {
+   const { name, value } = e.target;
+   setFormData(prevFormData => ({
+     ...prevFormData,
+     [name]: value,
+   }));
+ };
 
+ const handleSubmit = async (e) => {
+   e.preventDefault();
 
- 
- 
-   const handleChange = (e) => {
-    const {name,value } = e.target;  // Correctly use destructuring to get the name and value
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [name]: value,  // Dynamically update the right property based on the input name
-     
-    }));
-  };
-
-  const handleSubmit = async (e) => 
-  {
-    e.preventDefault();
-    try {
-      const response = await fetch('http://localhost:3000/admin/signup', {
-        
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-       console.log(response);
-      const data= await response.json();
-      if (response.ok) 
-      {
-       
-        
-        alert('User saved successfully');
-        console.log("User saved successfully",data);
-        navigate('/');
-        // Clear the form
-        setFormData({
-          firstname: '',
-          lastname: '',
-          email: '',
-          username: '',
-          password: ''
-        });  // Ensure all fields are reset
-     
-      }
-      else{
-        alert(`Signup failed: ${data.message}`);
-        console.log('Signup failed:', data.message);
-      }
-    } 
-    catch (error) {
-      alert('Error during user saving.');
-      console.error('Error during user saving:', error);
+   // Check for empty fields and display alerts if any
+   for (const key in formData) {
+    if (!formData[key]) {
+      alert(`${key.charAt(0).toUpperCase() + key.slice(1)} field cannot be empty.`);
+      return;
     }
-  };
+  }
+   // Check for alphabets in firstname and lastname
+   if (!/^[A-Za-z]+$/.test(formData.firstname) || !/^[A-Za-z]+$/.test(formData.lastname)) {
+     alert('Firstname and Lastname must contain only alphabets.');
+     return;
+   }
+
+   // Check for valid email format
+   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   if (!emailRegex.test(formData.email)) {
+     alert('Please enter a valid email address.');
+     return;
+   }
+
+   // Check for spaces in username and password
+   if (/\s/.test(formData.username) || /\s/.test(formData.password)) {
+     alert('Username and Password cannot contain spaces.');
+     return;
+   }
+
+   // Password validation rules
+   const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8,}$/;
+   if (!passwordRegex.test(formData.password)) {
+     alert('Password must be at least 8 characters long with at least one uppercase letter, one digit, and one special character.');
+     return;
+   }
+
+   try {
+     const response = await fetch('http://localhost:3000/admin/signup', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify(formData),
+     });
+     const data = await response.json();
+     if (response.ok) {
+       alert('User saved successfully');
+       console.log("User saved successfully", data);
+       navigate('/');
+       setFormData({
+         firstname: '',
+         lastname: '',
+         email: '',
+         username: '',
+         password: ''
+       });
+     } else {
+       alert('Signup failed: ${data.message}');
+       console.log('Signup failed:', data.message);
+     }
+   } catch (error) {
+     alert('Error during user saving.');
+     console.error('Error during user saving:', error);
+   }
+ };
 
 
   return (

@@ -19,7 +19,7 @@ function GetAllUsers() {
       .catch(error => console.error('Error fetching users:', error));
   }, []);
 
-  const handleDeleteuser = (userId) => {
+  const handleDeleteUser = (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       console.log("Deleting the user id:", userId);
       axios.post(`http://localhost:3000/user/deleteuser/${userId}`)
@@ -59,14 +59,16 @@ function GetAllUsers() {
           className="card border-0"
           style={{
             marginTop: '50px',
-            marginLeft:'200px',
+            marginLeft: '200px',
             minWidth: '800px',
-            minHeight: '60vh',
-            marginBottom:'200px',
+            minHeight: '80vh',
+            marginBottom: '200px',
             backgroundColor: 'rgba(194, 167, 148, 0.95)',
             borderRadius: '15px',
             padding: '20px',
-            boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset'
+            boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset',
+            maxHeight: '60vh', // Set maximum height for the container
+            overflowY: 'auto' // Enable vertical scrolling
           }}
         >
           <h3 className="text-center mb-4" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'black' }}>All Users</h3>
@@ -87,7 +89,7 @@ function GetAllUsers() {
                       <i className="bi bi-pencil-square"></i>
                     </button>
                     <button className="btn btn-link text-danger" style={{ padding: '0.25rem 0.5rem', color: 'inherit', fontSize: '1rem', marginRight: '0.5rem' }}
-                      onClick={() => handleDeleteuser(user._id)}>
+                      onClick={() => handleDeleteUser(user._id)}>
                       <i className="bi bi-trash-fill"></i>
                     </button>
                     <button className="btn btn-link text-secondary" style={{ padding: '0.25rem 0.5rem', color: 'inherit', fontSize: '1rem' }}

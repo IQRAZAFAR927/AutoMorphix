@@ -203,8 +203,16 @@ const AddCar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Check if any field is empty
     if (!Model || !Brand || !Year || !Register_num || !ImagePath) {
       alert('All fields including the image are required!');
+      return;
+    }
+
+    // Validate Registration Number
+    const regNumRegex = /^[A-Za-z]{1,3}\d{1,4}$/;
+    if (!regNumRegex.test(Register_num)) {
+      alert('Registration Number should have a maximum of 3 alphabets followed by maximum 4 digits with no special characters.');
       return;
     }
 
@@ -315,7 +323,7 @@ const AddCar = () => {
               </div>
               <div className="col-md-6">
                   <input
-                      type='Number'
+                      type='text'
                       placeholder='Registration Number'
                       //value={formData.Register_num}
                       onChange={handleRegistrationNumberChange}
@@ -328,7 +336,7 @@ const AddCar = () => {
               <div className="col-md-12">
                 <input
                   type="file"
-                  value={formData.ImagePath}
+                 // value={formData.ImagePath}
                   onChange={handleImagePath}
                   className="form-control"
                 />

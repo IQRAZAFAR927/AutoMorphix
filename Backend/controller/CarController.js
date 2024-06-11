@@ -159,7 +159,7 @@ const getAllCars =async (req, res) => {
 //------------Get One car------------
 
 const getOneCar = (req, res) => {
-    console.log("Attempting to retrieve car with ID:", req.params.Register_num);
+    console.log("Attempting to retrieve car with Register_num:", req.params.Register_num);
    
     const { Register_num } = req.params;
 
