@@ -66,7 +66,7 @@ const upload = multer({ storage: storage });
   const AddCar = (req, res) => {
     console.log("Execute the Add Car Function");
     const { Brand, Model, Year, Register_num } = req.body;
-    const ImagePath = req.file.path;
+    const ImagePath = req.file;
     console.log(req.body);
 
     if (!Brand || !Model || !Year || !Register_num || !ImagePath) {
@@ -115,7 +115,7 @@ const updateCar = (req, res) => {
             }
             res.status(200).send({
                 message: 'Car updated successfully',
-                car
+                car: car,
             });
         })
         .catch(err => res.status(500).send({ message: 'Error updating car', error: err }));

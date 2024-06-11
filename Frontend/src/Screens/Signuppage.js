@@ -3,6 +3,10 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
+
 
 function SignUpPage() 
 {
@@ -78,25 +82,27 @@ function SignUpPage()
 
 
   return (
-    <div className="bg-image" style={{
-      backgroundImage: 'url("Background.jpeg")', // Replace with your actual background image
-     // backgroundsize: 'contain',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      height: '100vh'
-    }}>
-      <header className="w-100 text-white text-center py-2 fixed-top" style={{ backgroundColor: '#ac632c' }}>
-        <h1>AutoMorphix</h1>
-      </header>
-     
+    // <div className="bg-image" style={{
+    //   backgroundImage: 'url("Background.jpeg")', // Replace with your actual background image
+    //  // backgroundsize: 'contain',
+    //   backgroundSize: 'cover',
+    //   backgroundPosition: 'center',
+    //   height: '100vh'
+    // }}>
+    //   <header className="w-100 text-white text-center py-2 fixed-top" style={{ backgroundColor: '#ac632c' }}>
+    //     <h1>AutoMorphix</h1>
+    //   </header>
+     <div>
+      <Header/>
 
       <div className="container d-flex flex-column justify-content-center align-items-center h-100">
         <div className="card border-0" style={{ 
-          maxWidth: '800px',
+          maxWidth: '700px',
           backgroundColor: '#b49d8b', // Container background color
           borderRadius: '15px',
           padding: '20px',
-          marginTop:'50px'
+          marginTop:'-600px',
+          
         }}>
          <h6 className="text-center mb-4" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'black' }}>Signup Page</h6> {/* Add User heading */}
         <form onSubmit={handleSubmit}>
@@ -122,12 +128,16 @@ function SignUpPage()
             <label htmlFor="password" className="form-label font-weight-bold"style={{fontWeight:'bold'}} >Password:</label>
             <input type="password"name='password' id="password" className="form-control" placeholder="Create a password" value={formData.password} onChange={handleChange}/>
           </div>
+          <div className="d-flex justify-content-center">
           <button type="submit" className="btn mt-3" 
-        style={{ backgroundColor: '#ac632c', color: 'white' ,fontWeight:'bold'}}>SignUp</button>
+                style={{ backgroundColor: '#ac632c', color: 'white' ,fontWeight:'bold'}}>SignUp</button>
+          </div>
+          
        </form>
         
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

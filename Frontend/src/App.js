@@ -52,6 +52,8 @@ function App() {
                  <Route path="/addcar" element={<AddCar/>}/>
                          {/* <Route path="/addimage" element={<AddCarimage/>}/> */}
                   <Route path="/updatecar/:Register_num" element={<UpdateCar/>}/>
+                  <Route path="/getallcars" element ={<CarManagement/>}/>
+                  <Route path="getonecar/:Register_num" element={<UpdateCar/>}/>
                          <Route path="/addimage" element={<AddCarimage/>}/>
                   <Route path="/remove_car" element={<RemoveCar/>}/>
                        <Route path="/Confirm_message" element={<Deleteconfirm/>}/>

@@ -176,7 +176,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { model } from 'mongoose';
+//import { model } from 'mongoose';
 
 const AddCar = () => {
   const [formData, setFormData] = useState({
@@ -249,6 +249,7 @@ const AddCar = () => {
             borderRadius: '15px',
             padding: '20px',
             boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset',
+
            // position: 'relative', zIndex: 2
           }}
           >

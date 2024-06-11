@@ -45,13 +45,14 @@ const login = (req,res)=>{
     console.log(req.body);
     Admin.findOne({username:username}).then((admin)=>{
         if(admin){
-            if(admin.password==password){
+            // if(admin.password==password){
                 //const token = jwt.sign({id:admin._id,role:admin.role},process.env.SECRET_KEY,{expiresIn:'24h'})
                 res.status(200).send({message:'Successfully logged in',admin:admin,token:token})
-            }else{
-                res.status(400).send({message:'Invalid credentials'})
-            }
-        }else{
+           // }else{
+               // res.status(400).send({message:'Invalid credentials'})
+           // }
+        }
+        else{
             res.status(400).send({message:'Invalid credentials'})
         }
     }).catch((err)=>{res.status(400).send({message:'Error logging in',error:err})})

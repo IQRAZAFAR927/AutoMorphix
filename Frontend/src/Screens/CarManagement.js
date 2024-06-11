@@ -65,7 +65,7 @@ function CarManagement() {
           }}
         >
           <button className="btn btn-success mb-3" onClick={handleAddNewCar} style={{ position: 'absolute', right: 20, top: 30 ,padding:'0.25rem 0.5rem',color:'inherit',fontSize:'1rem'}}>
-            <i className="bi bi-plus-lg"></i>
+            <i className="bi bi-plus-lg">Add</i>
           </button>
           <h3 className="text-center mb-4" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'black' }}>Car Operations</h3>
           <div className="d-flex flex-wrap justify-content-start">

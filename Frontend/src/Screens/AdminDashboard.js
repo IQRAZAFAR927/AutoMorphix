@@ -8,7 +8,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
 
   const goToUserManagement = () => {
-    navigate('/user');
+    navigate('/getusers');
   };
 
   const goToCarManagement = () => {

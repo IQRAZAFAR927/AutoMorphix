@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
 import { useNavigate} from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function SigninPage() {
   let navigate= useNavigate();
@@ -31,22 +33,19 @@ function SigninPage() {
       });
       const data= await response.json();
 
-      if (response.ok) {
+     
        
        // const result = await response.json();
         console.log('Login success:',data);
         localStorage.setItem('token',data.token);
         alert('Login Successful!');
         navigate('/admin');
-      } 
-      else{
-        throw new Error(data.message);
-      }
+      
      // }
     } catch (error) {
       console.error('Login Error: ', error);
       alert('Login failed: '+ error.message);
-      navigate('/admin');
+      //navigate('/admin');
     }
   }
 
@@ -57,23 +56,27 @@ function SigninPage() {
   }
 
   return (
-    <div className="bg-image" style={{
-      backgroundImage: 'url("Background.jpeg")', // Replace with your actual background image
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      height: '100vh'
-    }}>
-      <header className="w-100 text-white text-center py-3 fixed-top" style={{ backgroundColor: '#ac632c' }}>
-        <h1>AutoMorphix</h1>
-      </header>
+    // <div className="bg-image" style={{
+    //   backgroundImage: 'url("Background.jpeg")', // Replace with your actual background image
+    //   backgroundSize: 'cover',
+    //   backgroundPosition: 'center',
+    //   height: '100vh'
+    // }}>
+    //   <header className="w-100 text-white text-center py-3 fixed-top" style={{ backgroundColor: '#ac632c' }}>
+    //     <h1>AutoMorphix</h1>
+    //   </header>
+    <div>
+    <Header/>
       <div className="container d-flex justify-content-center align-items-center h-100">
             <div className="card border-0" style={{ 
-               maxWidth: '800px',
+              marginTop:'-550px',
+               maxWidth: '700px',
                minHeight: '50vh',
                backgroundColor: '#b69e8c',
                borderRadius: '15px',
                border: '2px solid #ac632c' // This line sets the border color to #ac632c
             }}>
+        
         <div className="row no-gutters align-items-center">
                 <div className="col-md-6 d-flex justify-content-center" >
                     {/* Replace 'login.png' with the path to your image */}
@@ -89,8 +92,8 @@ function SigninPage() {
           <div className="col-md-1 d-flex justify-content-center align-items-center">
                 <div className="vertical-line" style={{
                 backgroundColor: 'red',
-                width: '200px', // Corrected to ensure the line is visually distinct but not too wide
-                height: '100%', // Adjusts the line's height
+                width: '5px', // Corrected to ensure the line is visually distinct but not too wide
+                height: '250px', // Adjusts the line's height
                 }}></div>
           </div>
 
@@ -133,6 +136,7 @@ function SigninPage() {
             </div>
           </div>
         </div>
+        <Footer/>
     </div>
     
   );
