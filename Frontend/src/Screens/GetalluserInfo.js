@@ -1,49 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function GetAllUsers() {
   const [users, setUsers] = useState([]);
-
   const [showDetails, setShowDetails] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:3000/user/getusers') // Adjust the URL based on your server setup
+    fetch('http://localhost:3000/user/getusers')
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));
   }, []);
 
-  // const handleDelete = (userId) => {
-  //   if (window.confirm('Are you sure you want to delete this user?')) 
-  //     {
-  //     axios.delete(`http://localhost:3000/user/deleteuser/${userId}`)
-  //       .then(response => {
-  //         if (response.data.success) {  // Assuming your API returns a success flag
-  //           setUsers(users.filter(user => user.userId !== userId));
-  //           setUsers(prevUsers => prevUsers.filter(user => user._id !== userId));
-  //           alert('User deleted successfully');
-  //         } else {
-  //           alert(response.data.message || 'Failed to delete user.');
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error('Error deleting user:', error);
-  //         alert('Error deleting user.');
-  //       });
-  //   }
-  // };
-
   const handleDeleteuser = (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       console.log("Deleting the user id:", userId);
-      axios.delete(`http://localhost:3000/user/deleteuser/${userId}`)
+      axios.post(`http://localhost:3000/user/deleteuser/${userId}`)
         .then(() => {
-          setUsers(users.filter(user => user.userId !== userId));
+          setUsers(users.filter(user => user._id !== userId));
           console.log("Successfully deleted the user");
         })
         .catch(error => {
@@ -51,18 +32,8 @@ function GetAllUsers() {
           alert("Error deleting the user");
         });
     }
-  }
-  // const handleDelete = (Register_num) => {
-  //   axios.delete(`http://localhost:3000/car/deletecar/${Register_num}`)
-  //     .then(() => {
-  //       setCars(cars.filter(car => car.Register_num !== Register_num));
-  //     })
-  //     .catch(error => {
-  //       console.error('Error deleting car', error);
-  //     });
-  // };
+  };
 
-  
   const handleUpdate = (userId) => {
     navigate(`/update/${userId}`);
   };
@@ -81,42 +52,36 @@ function GetAllUsers() {
   };
 
   return (
-    <div className="bg-image" style={{
-      backgroundImage: 'url("Background.jpeg")',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      height: '100vh'
-    }}>
-      <header className="w-100 text-white text-center py-2 fixed-top" style={{ backgroundColor: '#ac632c', marginBottom: '100px' }}>
-        <h1>AutoMorphix</h1>
-      </header>
-      <div className="container pt-5 mt-5">
-        <div className="d-flex justify-content-between align-items-center mb-3" style={{ color: 'white' }}>
-          <h2>All Users</h2>
-          <button className="btn btn-success" style={{ padding: '0.25rem 0.5rem', color: 'inherit', fontSize: '1rem' }}
-            onClick={handleAddUser}>
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
+      <Header style={{ position: 'sticky', top: '0', zIndex: 9999 }} />
+      <div className="container d-flex flex-column justify-content-center align-items-center h-100 bg-opacity-25" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+        <div
+          className="card border-0"
+          style={{
+            marginTop: '50px',
+            marginLeft:'200px',
+            minWidth: '800px',
+            minHeight: '60vh',
+            marginBottom:'200px',
+            backgroundColor: 'rgba(194, 167, 148, 0.95)',
+            borderRadius: '15px',
+            padding: '20px',
+            boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset'
+          }}
+        >
+          <h3 className="text-center mb-4" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'black' }}>All Users</h3>
+          <button className="btn btn-success mb-3" onClick={handleAddUser} style={{ position: 'absolute', right: 20, top: 30, padding: '0.25rem 0.5rem', color: 'inherit', fontSize: '1rem' }}>
             <i className="bi bi-plus-lg"></i>
           </button>
-        </div>
-        <div className="table-responsive table-dark">
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Username</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map(user => (
-                <tr key={user._id}>
-                  <td>{user.firstname}</td>
-                  <td>{user.lastname}</td>
-                  <td>{user.email}</td>
-                  <td>{user.username}</td>
-                  <td>
+          
+          <div className="d-flex flex-wrap justify-content-start">
+            {users.map(user => (
+              <div key={user._id} className="card m-2 d-flex flex-column" style={{ width: '20rem', backgroundColor: 'rgba(172,99,44,0.8)' }}>
+                <div className="card-body">
+                  <h5 className="card-title">{user.firstname} {user.lastname}</h5>
+                  <p className="card-text">Email: {user.email}</p>
+                  <p className="card-text">Username: {user.username}</p>
+                  <div className="d-flex justify-content-between">
                     <button className="btn btn-link text-info" style={{ padding: '0.25rem 0.5rem', color: 'inherit', fontSize: '1rem' }}
                       onClick={() => handleUpdate(user._id)}>
                       <i className="bi bi-pencil-square"></i>
@@ -129,12 +94,13 @@ function GetAllUsers() {
                       onClick={() => handleViewInfo(user._id)}>
                       <i className="bi bi-eye-fill"></i>
                     </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+
         {showDetails && currentUser && (
           <div className="user-details-form" style={{
             position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
@@ -150,6 +116,7 @@ function GetAllUsers() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

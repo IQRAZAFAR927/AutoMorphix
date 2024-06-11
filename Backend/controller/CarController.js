@@ -1,7 +1,7 @@
 const Car= require('../models/CarModel');
 const jwt = require('jsonwebtoken')
-const multer = require('multer');
-// const Quiz = require('../models/ActivityModel.js')
+const multer = require('multer')
+
 
 
 
@@ -16,6 +16,32 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+// app.post('/car/addcar', upload.single('Imagepath'), (req, res) => {
+//   const { model, brand, year, registrationNumber } = req.body;
+//   const ImagePath = req.file ? req.file.path : '';
+
+//   if (!model || !brand || !year || !registrationNumber || !ImagePath) {
+//     return res.status(400).send({ message: 'All fields are required' });
+//   }
+
+//   // Mock database save function
+//   const newCar = {
+//     model,
+//     brand,
+//     year,
+//     registrationNumber,
+//     ImagePath: ImagePath
+//   };
+
+//   // Here, you would save the newCar to your database
+//   console.log(newCar);
+
+//   res.status(200).send({ message: 'Car added successfully' });
+// });
+
+// app.listen(3000, () => {
+//   console.log('Server is running on port 3000');
+// });
 
 // // Endpoint to handle file uploads
 // app.post('/upload', upload.single('carImage'), (req, res) => {
@@ -43,10 +69,13 @@ const upload = multer({ storage: storage });
     const ImagePath = req.file.path;
     console.log(req.body);
 
+    if (!Brand || !Model || !Year || !Register_num || !ImagePath) {
+      return res.status(400).send({ message: 'All fields are required' });
+    }
     // Check if the car with the given registration number already exists
     Car.findOne({ Register_num: Register_num }).then((car) => {
       if (car) {
-        res.status(400).send({ message: 'Car already exists' });
+        res.status(400).send({ message: 'Car already exists with this Register number' });
         return;
       }
       const newCar = new Car({

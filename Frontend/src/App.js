@@ -7,7 +7,7 @@ import UserManagement from './Screens/UserManagement';
 import Adduser from './Screens/Adduser';
 import Userconfirm from './Screens/UserAddConfirm';
 import Updateuser from './Screens/Updateuser';
-import RemoveUser from './Screens/Removeuser';
+//import RemoveUser from './Screens/Removeuser';
 import GetAllUser from './Screens/GetalluserInfo';
 
 import CarManagement from './Screens/CarManagement';
@@ -51,7 +51,7 @@ function App() {
 
                  <Route path="/addcar" element={<AddCar/>}/>
                          {/* <Route path="/addimage" element={<AddCarimage/>}/> */}
-                  <Route path="/updatecar" element={<UpdateCar/>}/>
+                  <Route path="/updatecar/:Register_num" element={<UpdateCar/>}/>
                          <Route path="/addimage" element={<AddCarimage/>}/>
                   <Route path="/remove_car" element={<RemoveCar/>}/>
                        <Route path="/Confirm_message" element={<Deleteconfirm/>}/>

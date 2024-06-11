@@ -19,7 +19,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-CarRouter.post('/addcar', upload.single('carImage'), AddCar)
+CarRouter.post('/addcar', upload.single('ImagePath'), AddCar)
+//CarRouter.post('/addcar',AddCar);
 CarRouter.put('/updatecar/:Register_num',updateCar)
 CarRouter.delete('/deletecar/:Register_num',deleteCar)
 CarRouter.get('/getallcars',getAllCars)

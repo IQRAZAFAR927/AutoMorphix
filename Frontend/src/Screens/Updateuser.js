@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function UpdateUser() {
     const [formData, setFormData] = useState({
@@ -52,7 +54,7 @@ function UpdateUser() {
         e.preventDefault();
         try {
             const response = await fetch(`http://localhost:3000/user/updateuser/${userId}`, {
-                method: 'POST',
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
             });
@@ -71,52 +73,65 @@ function UpdateUser() {
     };
 
     return (
-        <div className="bg-image" style={{
-            backgroundImage: 'url("Background.jpeg")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            height: '100vh'
-        }}>
-            <header className="w-100 text-white text-center py-2 fixed-top" style={{ backgroundColor: '#ac632c' }}>
-                <h1>AutoMorphix</h1>
-            </header>
+        // <div className="bg-image" style={{
+        //     backgroundImage: 'url("Background.jpeg")',
+        //     backgroundSize: 'cover',
+        //     backgroundPosition: 'center',
+        //     height: '100vh'
+        // }}>
+        //     <header className="w-100 text-white text-center py-2 fixed-top" style={{ backgroundColor: '#ac632c' }}>
+        //         <h1>AutoMorphix</h1>
+        //     </header>
+        <div style={{ position: 'relative', minHeight: '100vh' }}>
+        <Header style={{ position: 'sticky', top: '0', zIndex: 9999 }} />
+        <div className="container d-flex flex-column justify-content-center align-items-center h-100 bg-opacity-25" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+          <div
+            className="card border-0"
+            style={{
+              marginTop: '50px',
+              marginLeft: '200px',
+              minWidth: '400px',
+              minHeight: '60vh',
+              marginBottom: '200px',
+              backgroundColor: 'rgba(194, 167, 148, 0.95)',
+              borderRadius: '15px',
+              padding: '20px',
+              boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset',
+            }}
+          >
 
-            <div className="container d-flex flex-column justify-content-center align-items-center h-100">
-                <div className="card border-0" style={{
-                    maxWidth: '800px',
-                    backgroundColor: '#b49d8b',
-                    borderRadius: '15px',
-                    padding: '20px',
-                    marginTop: '50px'
-                }}>
-                    <h6 className="text-center mb-4" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'black' }}>Update User</h6>
-                    <form onSubmit={handleSubmit}>
-                        <div className="row mb-3">
-                            <div className="col">
-                                <label htmlFor="firstName" className="form-label font-weight-bold">First Name:</label>
-                                <input type="text" id="firstName" name="firstname" className="form-control" placeholder="Enter first name" value={formData.firstname} onChange={handleChange} />
-                            </div>
-                            <div className="col">
-                                <label htmlFor="lastName" className="form-label font-weight-bold">Last Name:</label>
-                                <input type="text" id="lastName" name="lastname" className="form-control" placeholder="Enter last name" value={formData.lastname} onChange={handleChange} />
-                            </div>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="email" className="form-label font-weight-bold">Email:</label>
-                            <input type="email" id="email" name="email" className="form-control" placeholder="Enter email" value={formData.email} onChange={handleChange} />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="username" className="form-label font-weight-bold">Username:</label>
-                            <input type="text" id="username" name="username" className="form-control" placeholder="Choose a username" value={formData.username} onChange={handleChange} />
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password" className="form-label font-weight-bold">Password:</label>
-                            <input type="password" id="password" name="password" className="form-control" placeholder="Create a password" value={formData.password} onChange={handleChange} />
-                        </div>
-                        <button type="submit" className="btn" style={{ backgroundColor: '#ac632c', color: 'white', fontWeight: 'bold' }}>Update</button>
-                    </form>
+           
+<h6 className="text-center mb-4" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'black' }}>Update User</h6>
+          <form onSubmit={handleSubmit}>
+            <div className="row mb-3">
+              <div className="col">
+                <label htmlFor="firstName" className="form-label font-weight-bold" style={{ fontWeight: 'bold' }}>First Name:</label>
+                <input type="text" name='firstname' id="firstName" className="form-control" placeholder="Enter first name" value={formData.firstname} onChange={handleChange} />
+              </div>
+              <div className="col">
+                <label htmlFor="lastName" className="form-label font-weight-bold" style={{ fontWeight: 'bold' }}>Last Name:</label>
+                <input type="text" name='lastname' id="lastName" className="form-control" placeholder="Enter last name" value={formData.lastname} onChange={handleChange} />
+              </div>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label font-weight-bold" style={{ fontWeight: 'bold' }}>Email:</label>
+              <input type="email" name='email' id="email" className="form-control" placeholder="Enter email" value={formData.email} onChange={handleChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label font-weight-bold" style={{ fontWeight: 'bold' }}>Username:</label>
+              <input type="text" name='username' id="username" className="form-control" placeholder="Choose a username" value={formData.username} onChange={handleChange} />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label font-weight-bold" style={{ fontWeight: 'bold' }}>Password:</label>
+              <input type="password" name='password' id="password" className="form-control" placeholder="Create a password" value={formData.password} onChange={handleChange} />
+            </div>
+            <div className="d-flex justify-content-center">
+              <button type="submit" className="btn mt-3" style={{ backgroundColor: '#ac632c', color: 'white', fontWeight: 'bold' }}>Update</button>
+            </div>
+          </form>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }
