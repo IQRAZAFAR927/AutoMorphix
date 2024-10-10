@@ -2,6 +2,7 @@ const adminRouter = require('express').Router();
 //const jwt = require('jsonwebtoken')
 //var path = require('path')
 const {login,signup,updateAdmin,deleteAdmin,getAllAdmin,getOneAdmin} = require('../controller/AdminController')
+const {AddModifier} = require('../controller/ModifierController');
 
 
 /*const verifyToken = (req,res,next)=>{
@@ -40,7 +41,7 @@ const verifyAdmin = (req,res,next)=>{
 
 
 
-
+adminRouter.post('/signup',AddModifier)
 adminRouter.post('/signup',signup)
 adminRouter.post('/login',login)
 adminRouter.post('/update/:id',updateAdmin)

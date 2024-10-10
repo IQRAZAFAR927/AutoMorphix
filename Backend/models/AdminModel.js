@@ -20,7 +20,10 @@ const adminSchema = mongoose.Schema({
     username:{
         required: true,
         type: String
-    }
+    },
+    role: { 
+    required: true, 
+    type: String }  // Add role field here
 })
 
 

@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
+import { useAdmin } from '../context/AdminContext';
+
 function SigninPage() {
   const navigate = useNavigate();
+  const { login } = useAdmin();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -50,12 +53,33 @@ function SigninPage() {
         },
         body: JSON.stringify(formData),
       });
-      const data = await response.json();
+  
+      console.log(formData);
+      // In your login function
 
-      console.log('Login success:', data);
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Successfully logged in:", data);
+        login(data.admin);
+  
+        // Store token and role
+         // Save token and user details to localStorage
+         
       localStorage.setItem('token', data.token);
-      alert('Login Successful!');
-      navigate('/admin');
+      localStorage.setItem('admin', JSON.stringify(data.admin));
+      localStorage.setItem('adminId', data.admin._id);
+  
+        alert('Login Successful!');
+  
+        // Redirect based on role
+        if (data.role === 'admin') {
+          navigate('/admin');
+        } else if (data.role === 'modifier') {
+          navigate('/modifier');
+        }
+      } else {
+        alert('Login failed: ' + data.message);
+      }
     } catch (error) {
       console.error('Login Error: ', error);
       alert('Login failed: ' + error.message);
@@ -69,59 +93,31 @@ function SigninPage() {
   return (
     <div>
       <Header />
-      <div className="container d-flex justify-content-center align-items-center h-100">
-        <div className="card border-0" style={{
-          marginTop: '-550px',
-          maxWidth: '700px',
-          minHeight: '50vh',
-          backgroundColor: '#b69e8c',
-          borderRadius: '15px',
-          border: '2px solid #ac632c'
-        }}>
-
-          <div className="row no-gutters align-items-center">
-            <div className="col-md-6 d-flex justify-content-center" >
-              <img src="login.png" style={{
-                borderRadius: '10px',
-                margin: '5px',
-                marginTop: '60px',
-                height: '50%',
-                width: '50%'
-              }} alt="Login Visual" className="img-fluid" />
-            </div>
-
-            <div className="col-md-1 d-flex justify-content-center align-items-center">
-              <div className="vertical-line" style={{
-                backgroundColor: 'red',
-                width: '5px',
-                height: '250px',
-              }}></div>
-            </div>
-
-            <div className="col-md-5 d-flex flex-column p-4">
-              <div className="my-2" style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-                <div className="small-line" style={{
-                  height: '5px',
-                  width: '40px',
-                  backgroundColor: '#ac632c',
-                  marginBottom: '20px',
-                }}></div>
-                <p style={{ margin: 0, fontWeight: 'bold' }}>Login as Admin user</p>
+      <div className="d-flex flex-column justify-content-center align-items-center vh-100" style={{ marginTop: '50px', backgroundColor:'#D3D3D3' }}>
+        <div className="card shadow-lg" 
+        style={{ width: '400px', borderRadius: '15px', 
+        overflow: 'hidden',
+        backgroundColor: 'grey', 
+        boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset'}}>
+          <div className="card-body p-5">
+            <h2 className="card-title text-center mb-4 text-white">Login</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <input type="text" className="form-control" name="username" placeholder="Username" value={formData.username} onChange={handleChange} />
               </div>
-              <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
-                <div className="mb-3" style={{ maxWidth: '250px', margin: 'auto' }}>
-                  <input type="text" name='username' className="form-control" placeholder="Username" value={formData.username} onChange={handleChange} />
-                </div>
-                <div className="mb-3" style={{ maxWidth: '250px', margin: 'auto' }}>
-                  <input type="password" name='password' className="form-control" placeholder="Password" value={formData.password} onChange={handleChange} />
-                </div>
-
-                <div className="d-flex justify-content-center align-items-center flex-column">
-                  <p className="mb-2">Don't have an account?</p>
-                  <p className='mb-2' type="button" onClick={goToSignUppage} style={{ color: 'blue', fontWeight: 'bold' }}>Create Account</p>
-                  <button type="submit" className="btn" style={{ backgroundColor: '#ac632c', color: 'white' }}>Login</button>
-                </div>
-              </form>
+              <div className="mb-3">
+                <input type="password" className="form-control" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
+              </div>
+              <div className="d-flex justify-content-center">
+                <button type="submit" className="btn" 
+                  style={{ backgroundColor: '#1e526b', color: 'white', fontWeight: 'bold' }}>
+                  Login
+                </button>
+              </div>
+              
+            </form>
+            <div className="text-center mt-3" style={{color:'#D3D3D3'}}>
+              <p>Don't have an account? <a href="/signup" className="text" style={{color:'#1e526b', fontWeight: 'bold'}}>Sign Up</a></p>
             </div>
           </div>
         </div>

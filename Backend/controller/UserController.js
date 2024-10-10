@@ -20,6 +20,7 @@ const AddUser = (req, res) => {
         email: email,
         password: password,
         username:username,
+        
       });
         // Generate a token for the new user
       // const token = jwt.sign({ userId: newUser._id }, process.env.SECRET_KEY);
@@ -43,6 +44,7 @@ const AddUser = (req, res) => {
 //---------------------Upadate the User------------------------------------
   
 const bcrypt = require('bcryptjs'); // Assuming you are using bcryptjs for password hashing
+
 
 const updateUser = async (req, res) => {
   console.log("Execute the UpdateUser Function");
@@ -76,6 +78,7 @@ const updateUser = async (req, res) => {
   }
 };
 
+
 //------------------Delete theh User----------------------------
 
   const deleteUser = async (req, res) => {
@@ -87,10 +90,12 @@ const updateUser = async (req, res) => {
       if (!deletedUser) {
         return res.status(404).json({ message: 'User not found' });
       }
+      res.status(200).send("user delete successfully");
       res.json({ message: 'User deleted successfully', User: deletedUser });
       console.log("User Delete with information:",deletedUser);
     } catch (err) {
       console.error(err);
+      res.status(404).send("User not found");
       res.status(500).json({ message: 'Error deleting user' });
     }
   };
@@ -101,7 +106,7 @@ const updateUser = async (req, res) => {
 
   const getAllUser = async (req, res) => {
     try {
-      const users = await User.find();
+      const users = await User.find().sort({_id:-1});
       res.json(users);
       console.log(users);
     } catch (err) {

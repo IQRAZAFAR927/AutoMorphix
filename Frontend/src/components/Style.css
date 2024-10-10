@@ -1,0 +1,93 @@
+/* Specific styles for AboutUs component */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-vr-box {
+    opacity: 0; 
+    animation-fill-mode: forwards; 
+    animation-duration: 5s; 
+    animation-timing-function: ease-out; 
+}
+
+
+
+#about-us .d-flex.flex-column.min-vh-100 {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#about-us .animate-text-box {
+    opacity: 0; /* Start elements as invisible */
+    animation-fill-mode: forwards; /* Keeps the property values set by the last keyframe */
+}
+
+#about-us .container.flex-grow-1 {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+#about-us .row.justify-content-center {
+    width: 100%;
+}
+
+#about-us .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#about-us .img-fluid {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+#about-us .text-center h1, 
+#about-us .text-center h2, 
+#about-us .text-center p {
+    text-align: center;
+}
+
+#about-us ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+#about-us ul li {
+    padding: 5px 0;
+}
+
+#about-us a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#about-us a:hover {
+    text-decoration: underline;
+}

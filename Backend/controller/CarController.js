@@ -63,48 +63,28 @@ const upload = multer({ storage: storage });
 
 //-------------------Add Car------------------
 
-  const AddCar = (req, res) => {
-    console.log("Execute the Add Car Function");
-    const { Brand, Model, Year, Register_num } = req.body;
-    const ImagePath = req.file;
-    console.log(req.body);
+const AddCar = (req, res) => {
+  console.log("Execute the Addcar function");
+  const { Brand, Model, Year, Register_num } = req.body;
 
-    if (!Brand || !Model || !Year || !Register_num || !ImagePath) {
-      return res.status(400).send({ message: 'All fields are required' });
+  console.log(Car);
+  Car.findOne({ Register_num: Register_num }).then((car) => {
+    if (car) {
+      return res.status(400).send({ message: 'Car already exists with this Register number' });
     }
-    // Check if the car with the given registration number already exists
-    Car.findOne({ Register_num: Register_num }).then((car) => {
-      if (car) {
-        res.status(400).send({ message: 'Car already exists with this Register number' });
-        return;
-      }
-      const newCar = new Car({
-        Brand: Brand,
-        Model: Model,
-        Year: Year,
-        Register_num: Register_num,
-        ImagePath: ImagePath
-        
-      });
+    const newCar = new Car({ Brand, Model, Year, Register_num });
 
-      newCar
-        .save()
-        .then((car) => {
-          res.status(200).send({
-            message: 'Successfully added car',
-            car: car,
-          });
-        })
-        .catch((err) =>
-          res.status(400).send({ message: 'Error adding car', error: err })
-        );
-    });
+    newCar.save()
+      .then((car) => res.status(200).send({ message: 'Successfully added car', car }))
+      .catch((err) => res.status(400).send({ message: 'Error adding car', error: err }));
+  });
 };
 
 
 //------------------Update car----------------
 
 const updateCar = (req, res) => {
+  console.log("Execute the update car function");
     const { Register_num } = req.params;
     const updateData = req.body;
 
@@ -124,25 +104,31 @@ const updateCar = (req, res) => {
 
 
 //--------------Delete Car---------------
-const deleteCar = (req, res) => {
-    const { Register_num } = req.params;
+const deleteCar = async (req, res) => {
+  const { Register_num } = req.params;
+  console.log(`Attempting to delete car with registration number: ${Register_num}`);
 
-    Car.findOneAndDelete({ Register_num: Register_num })
-        .then(car => {
-            if (!car) {
-                return res.status(404).send({ message: 'Car not found' });
-            }
-            res.status(200).send({ message: 'Car deleted successfully' });
-        })
-        .catch(err => res.status(500).send({ message: 'Error deleting car', error: err }));
+  try {
+      const car = await Car.findOneAndDelete({ Register_num: Register_num });
+      if (!car) {
+          console.log('Car not found');
+          return res.status(404).send({ message: 'Car not found' });
+      }
+      console.log(`Car with registration number ${Register_num} deleted successfully`);
+      res.status(200).send({ message: 'Car deleted successfully' });
+  } catch (err) {
+      console.error(`Error deleting car: ${err}`);
+      res.status(500).send({ message: 'Error deleting car', error: err });
+  }
 };
+
 
 
 //------------Get all cars-------------
 const getAllCars =async (req, res) => {
     console.log("Execute the get all cars data");
     try{
-            const cars = await Car.find();
+            const cars = await Car.find().sort({ _id:-1 });
             res.json(cars);
             console.log(cars);
     }
@@ -158,23 +144,29 @@ const getAllCars =async (req, res) => {
 
 //------------Get One car------------
 
-const getOneCar = (req, res) => {
-    console.log("Attempting to retrieve car with Register_num:", req.params.Register_num);
-   
-    const { Register_num } = req.params;
 
-    Car.findOne({ Register_num: Register_num })
-        .then(car => {
-            if (!car) {
-                return res.status(404).send({ message: 'Car not found' });
-            }
-            res.status(200).send(car);
-            res.json(car);
-            console.log("\nGetting one Car Information:",car);
-          
-        })
-        .catch(err => res.status(500).send({ message: 'Error retrieving car', error: err }));
+const getOneCar = async (req, res) => {
+  const { Register_num } = req.params;
+  console.log("Execute the one get car information with register number:". Register_num);
+ 
+  try {
+      const car = await Car.findOne({ Register_num });
+      if (!car) {
+          return res.status(404).send({ message: 'Car not found' });
+      }
+      res.json(car);
+  } catch (err) {
+      console.error('Failed to retrieve car:', err);
+      res.status(500).send({ message: 'Error retrieving car', error: err });
+  }
 };
+
+
+
+
+
+
+
 
 module.exports = { AddCar,updateCar,deleteCar,getAllCars,getOneCar};
 

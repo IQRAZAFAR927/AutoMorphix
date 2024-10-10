@@ -4,6 +4,9 @@ const cors = require('cors');
 const adminRouter = require('./routes/AdminRoutes')
 const userRouter = require('./routes/UserRoutes')
 const CarRouter = require ('./routes/CarRoutes')
+const ModifierRouter = require('./routes/ModifierRoutes')
+const adminRouter1 = require('./routes/ModifierRoutes')
+const  modelrouter = require('./routes/Latestmodel_routes')
 
 
 // const fs = require('fs');
@@ -26,14 +29,19 @@ const CarRouter = require ('./routes/CarRoutes')
 require('dotenv').config();
 
 const app = express();
+
 //app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 
+
 app.use(cors());
 
+// app.use('/admin1',adminRouter1);
 app.use('/admin',adminRouter);
 app.use('/user',userRouter);
 app.use('/car', CarRouter)
+app.use('/modifier', ModifierRouter);
+app.use('/model', modelrouter);
 console.log('Car routes are set up.');
 
 

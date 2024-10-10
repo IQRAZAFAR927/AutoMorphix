@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 //---------------------------Signup--------------------------
 const signup = (req, res) => {
     console.log("Execute the Signup");
-    const {firstname,lastname, email,password,username} = req.body;
+    const {firstname,lastname, email,password,username,role} = req.body;
     console.log(req.body);
    
     Admin.findOne({ username: username }).then((admin) => {
@@ -20,6 +20,7 @@ const signup = (req, res) => {
         email: email,
         password: password,
         username:username,
+        role: role,        
       });
         // Generate a token for the new user
       // const token = jwt.sign({ userId: newUser._id }, process.env.SECRET_KEY);
@@ -29,7 +30,7 @@ const signup = (req, res) => {
           res.status(200).send({
             message: 'Successfully added admin',
             admin: admin,
-            // token: token, // Include the generated token in the response
+            token: token, // Include the generated token in the response
           });
         })
         .catch((err) =>
@@ -41,16 +42,20 @@ const signup = (req, res) => {
 //----------------------Login------------------------------------
 const login = (req,res)=>{
     console.log("Execute the Login")
+    
     const {username, password} = req.body;
+    console.log("Received body:", req.body);  // Add this to debug
     console.log(req.body);
+  
     Admin.findOne({username:username}).then((admin)=>{
         if(admin){
-            // if(admin.password==password){
-                //const token = jwt.sign({id:admin._id,role:admin.role},process.env.SECRET_KEY,{expiresIn:'24h'})
-                res.status(200).send({message:'Successfully logged in',admin:admin,token:token})
-           // }else{
-               // res.status(400).send({message:'Invalid credentials'})
-           // }
+          if (admin.password === password) {
+            const token = jwt.sign({ id: admin._id, role: admin.role }, process.env.SECRET_KEY, { expiresIn: '24h' });
+            res.status(200).send({ message: 'Successfully logged in', admin: admin, token: token, role: admin.role });  // Include role
+            
+            }else {
+              res.status(400).send({ message: 'Invalid credentials' });
+            }
         }
         else{
             res.status(400).send({message:'Invalid credentials'})
@@ -107,7 +112,8 @@ const login = (req,res)=>{
 
   const getAllAdmin = async (req, res) => {
     try {
-      const admins = await Admin.find();
+      const admins = await Admin.find().sort({_id:-1});
+     
       res.json(admins);
       console.log(admins);
     } catch (err) {

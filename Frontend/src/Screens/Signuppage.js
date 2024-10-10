@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 
 function SignUpPage() 
 {
+  console.log("SignUpPage is rendering");
  let navigate = useNavigate();
 
  const [formData, setFormData] = useState({
@@ -65,7 +66,7 @@ function SignUpPage()
    }
 
    try {
-     const response = await fetch('http://localhost:3000/admin/signup', {
+     const response = await fetch('http://localhost:3000/admin1/signup', {
        method: 'POST',
        headers: { 'Content-Type': 'application/json' },
        body: JSON.stringify(formData),
@@ -93,65 +94,52 @@ function SignUpPage()
  };
 
 
-  return (
-    // <div className="bg-image" style={{
-    //   backgroundImage: 'url("Background.jpeg")', // Replace with your actual background image
-    //  // backgroundsize: 'contain',
-    //   backgroundSize: 'cover',
-    //   backgroundPosition: 'center',
-    //   height: '100vh'
-    // }}>
-    //   <header className="w-100 text-white text-center py-2 fixed-top" style={{ backgroundColor: '#ac632c' }}>
-    //     <h1>AutoMorphix</h1>
-    //   </header>
-     <div>
-      <Header/>
-
-      <div className="container d-flex flex-column justify-content-center align-items-center h-100">
-        <div className="card border-0" style={{ 
-          maxWidth: '700px',
-          backgroundColor: '#b49d8b', // Container background color
-          borderRadius: '15px',
-          padding: '20px',
-          marginTop:'-600px',
-          
-        }}>
-         <h6 className="text-center mb-4" style={{ fontSize: '2rem', fontWeight: 'bold', color: 'black' }}>Signup Page</h6> {/* Add User heading */}
+ return (
+  <div>
+    <Header /> {/* Fixed Header */}
+    <div className="d-flex flex-column justify-content-center align-items-center vh-100" style={{ marginTop: '50px', backgroundColor:'#D3D3D3' }}>
+      <div className="card border-0 shadow-lg" style={{ 
+        maxWidth: '500px', 
+        width: '100%', 
+        padding: '30px', 
+        backgroundColor: 'grey',
+        borderRadius: '15px',
+         boxShadow: '0 0 5px rgba(172,99,44,255), 0 0 5px rgba(172,99,44,255) inset'
+      }}>
+        <h2 className="text-center mb-4" style={{ fontWeight: 'bold', color: 'white' }}>Sign Up</h2>
         <form onSubmit={handleSubmit}>
-          <div className="row mb-3">
-            <div className="col">
-              <label htmlFor="firstName" className="form-label font-weight-bold" style={{fontWeight:'bold'}}>First Name:</label>
-              <input type="text" name='firstname' id="firstName" className="form-control" placeholder="Enter first name" value={formData.firstname} onChange={handleChange} />
-            </div>
-            <div className="col">
-              <label htmlFor="lastName" className="form-label font-weight-bold" style={{fontWeight:'bold'}} >Last Name:</label>
-              <input type="text" name='lastname' id="lastName" className="form-control" placeholder="Enter last name" value={formData.lastname} onChange={handleChange}/>
-            </div>
+          <div className="mb-3">
+            <label htmlFor="firstName" className="form-label" style={{color:'white'}}>First Name</label>
+            <input type="text" name="firstname" id="firstName" className="form-control" value={formData.firstname} onChange={handleChange} required />
           </div>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label font-weight-bold" style={{fontWeight:'bold'}} >Email:</label>
-            <input type="email" name='email' id="email" className="form-control" placeholder="Enter email" value={formData.email} onChange={handleChange}/>
+            <label htmlFor="lastName" className="form-label" style={{color:'white'}}>Last Name</label>
+            <input type="text" name="lastname" id="lastName" className="form-control" value={formData.lastname} onChange={handleChange} required />
           </div>
           <div className="mb-3">
-            <label htmlFor="username" className="form-label font-weight-bold" style={{fontWeight:'bold'}} >Username:</label>
-            <input type="text" name='username' id="username" className="form-control" placeholder="Choose a username" value={formData.username} onChange={handleChange}/>
+            <label htmlFor="email" className="form-label"style={{color:'white'}}>Email</label>
+            <input type="email" name="email" id="email" className="form-control" value={formData.email} onChange={handleChange} required />
           </div>
           <div className="mb-3">
-            <label htmlFor="password" className="form-label font-weight-bold"style={{fontWeight:'bold'}} >Password:</label>
-            <input type="password"name='password' id="password" className="form-control" placeholder="Create a password" value={formData.password} onChange={handleChange}/>
+            <label htmlFor="username" className="form-label"style={{color:'white'}}>Username</label>
+            <input type="text" name="username" id="username" className="form-control" value={formData.username} onChange={handleChange} required />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label"style={{color:'white'}}>Password</label>
+            <input type="password" name="password" id="password" className="form-control" value={formData.password} onChange={handleChange} required />
           </div>
           <div className="d-flex justify-content-center">
-          <button type="submit" className="btn mt-3" 
-                style={{ backgroundColor: '#ac632c', color: 'white' ,fontWeight:'bold'}}>SignUp</button>
+            <button type="submit" className="btn" 
+              style={{ backgroundColor: '#1e526b', color: 'white', fontWeight: 'bold' }}>
+              Sign Up
+            </button>
           </div>
-          
-       </form>
-        
-        </div>
+        </form>
       </div>
-      <Footer/>
     </div>
-  );
+    <Footer /> {/* Fixed Footer */}
+  </div>
+);
 }
 
 export default SignUpPage;
